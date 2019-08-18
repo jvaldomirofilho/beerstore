@@ -13,6 +13,7 @@ build/
 .settings
 .springBeans
 .sts4-cache
+/bin/*
 
 ### IntelliJ IDEA ###
 .idea
@@ -20,6 +21,7 @@ build/
 *.iml
 *.ipr
 out/
+/bin/*
 
 ### NetBeans ###
 /nbproject/private/
@@ -27,6 +29,6 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
-
+/bin/*:wq
 ### VS Code ###
 .vscode/
