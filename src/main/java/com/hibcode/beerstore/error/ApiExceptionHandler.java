@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.hibcode.beerstore.error.ErrorResponse.ApiError;
+import com.hibcode.beerstore.service.exception.BusinessException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,6 +49,14 @@ public class ApiExceptionHandler {
 		ErrorResponse errorResponse = ErrorResponse.of(BAD_REQUEST, apiErrors);
 		return ResponseEntity.badRequest().body(errorResponse);
 		
+	}
+	
+	@ExceptionHandler(BusinessException.class)
+	public ResponseEntity<ErrorResponse> handlerBusinessException(BusinessException exception, Locale locale){
+		final String errorCode = exception.getCode();
+		final HttpStatus status = exception.getStatus();
+		final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(errorCode, locale));
+		return ResponseEntity.badRequest().body(errorResponse);
 	}
 	
 	@ExceptionHandler(InvalidFormatException.class)
