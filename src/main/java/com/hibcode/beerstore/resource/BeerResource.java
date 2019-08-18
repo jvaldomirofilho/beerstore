@@ -1,6 +1,5 @@
 package com.hibcode.beerstore.resource;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,8 @@ public class BeerResource {
 	private Beers beers;
 	
 	@GetMapping
-	public List<String> all(){
-		return Arrays.asList("Skol", "Brama", "Stella", "Bohemia", "Cristal");
+	public List<Beer> all(){
+		return beers.findAll();
 	}
 	
 	@PostMapping
