@@ -3,6 +3,8 @@ package com.hibcode.beerstore.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,15 @@ public class BeerService {
 	private boolean isUpdatingToADifferentBeer(final Beer beer, Optional<Beer> beerNamedAndType) {
 		return beer.alreadyExist() && !beerNamedAndType.get().equals(beer);
 	}
+	
+	public void delete(Long id) {
+		Optional<Beer> beerDelete = beers.findById(id);
+		if (!beerDelete.isPresent()) {
+			throw new NoResultException();
+		}
+		beers.delete(beerDelete.get());
+	}
+	
 	
 	public List<Beer> findAll(){
 		return beers.findAll();

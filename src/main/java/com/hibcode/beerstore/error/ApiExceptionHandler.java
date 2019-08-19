@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
+import javax.persistence.NoResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -49,6 +51,14 @@ public class ApiExceptionHandler {
 		ErrorResponse errorResponse = ErrorResponse.of(BAD_REQUEST, apiErrors);
 		return ResponseEntity.badRequest().body(errorResponse);
 		
+	}
+	
+	@ExceptionHandler(NoResultException.class)
+	public ResponseEntity<ErrorResponse> handlerNoResultException(NoResultException exception, Locale locale){
+		final String errorCode = "entityNotFound";
+		final HttpStatus status = HttpStatus.NOT_FOUND;
+		final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(errorCode, locale));
+		return ResponseEntity.badRequest().body(errorResponse);
 	}
 	
 	@ExceptionHandler(BusinessException.class)
